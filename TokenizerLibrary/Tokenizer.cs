@@ -6,45 +6,38 @@ namespace TokenizerLibrary
 {
   public class Tokenizer
   {
-    // almaKorteSzilva
-    int upperCase = 0;
-    string _input;
-    List<string> results = new List<string>();
-
-    public Tokenizer(string input)
+    public static IEnumerable<string> Tokenize(string input)
     {
-      _input = input;
-    }
+      int _upperCase = 0;
+      List<string> _results = new List<string>();
 
-    public IEnumerable<string> Tokenize()
-    {
-      if (!_input.Any(char.IsUpper))
+      if (!input.Any(char.IsUpper))
       {
-        results.Add(_input);
-        return results;
+        _results.Add(input);
+        return _results;
       }
       else
       {
-        for (int i = 0; i < _input.Length; i++)
+        for (int i = 1; i < input.Length; i++)
         {
-          if (char.IsUpper(_input[i]) && i != 0)
+          if (char.IsUpper(input[i]))
           {
-            AddSubString(i);
-            upperCase = i;
+            _results = AddSubString(i, input, _results, _upperCase);
+            _upperCase = i;
           }
         }
       }
 
-      AddSubString(_input.Length);
-
-      return results;
+      _results = AddSubString(input.Length, input, _results, _upperCase);
+      return _results;
     }
 
-    private void AddSubString(int index)
+    private static List<string> AddSubString(int index, string input, List<string> results, int upperCase)
     {
       int stringLength = index - upperCase;
-      string subS = _input.Substring(upperCase, stringLength);
+      string subS = input.Substring(upperCase, stringLength);
       results.Add(subS);
+      return results;
     }
   }
 }
