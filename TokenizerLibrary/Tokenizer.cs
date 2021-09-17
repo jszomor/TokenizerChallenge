@@ -11,7 +11,8 @@ namespace TokenizerLibrary
       int _upperCase = 0;
       List<string> _results = new List<string>();
 
-      if (!input.Any(char.IsUpper))
+      if (string.IsNullOrWhiteSpace(input)) return null;
+      else if (!input.Any(char.IsUpper))
       {
         _results.Add(input);
         return _results;
