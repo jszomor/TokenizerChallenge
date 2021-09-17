@@ -6,45 +6,27 @@ namespace TokenizerLibrary
 {
   public class Tokenizer
   {
-    // almaKorteSzilva
-    int upperCase = 0;
-    string _input;
-    List<string> results = new List<string>();
-
-    public Tokenizer(string input)
+    public static IEnumerable<string> Tokenize(string input)
     {
-      _input = input;
-    }
-
-    public IEnumerable<string> Tokenize()
-    {
-      if (!_input.Any(char.IsUpper))
+      if (string.IsNullOrWhiteSpace(input)) yield break;
+      if(input.Length == 1)
       {
-        results.Add(_input);
-        return results;
+        yield return input;
+        yield break;
       }
-      else
+      var start = 0;
+      var end = input.Length;
+      var position = 1;
+      while(position <= end)
       {
-        for (int i = 0; i < _input.Length; i++)
+        if(position == end || char.IsUpper(input[position]))
         {
-          if (char.IsUpper(_input[i]) && i != 0)
-          {
-            AddSubString(i);
-            upperCase = i;
-          }
+          yield return input.Substring(start, position - start);
+          start = position;
         }
+
+        position++;
       }
-
-      AddSubString(_input.Length);
-
-      return results;
-    }
-
-    private void AddSubString(int index)
-    {
-      int stringLength = index - upperCase;
-      string subS = _input.Substring(upperCase, stringLength);
-      results.Add(subS);
     }
   }
 }

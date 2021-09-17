@@ -9,11 +9,12 @@ namespace TokenizerTests
     [InlineData("single", new[] { "single" })]
     [InlineData("firstSecond", new[] { "first", "Second" })]
     [InlineData("firstS", new[] { "first", "S" })]
+    [InlineData("A", new[] { "A" })]
+    [InlineData("c", new[] { "c" })]
     [InlineData("firstSecondThird", new[] { "first", "Second", "Third" })]
     public void Test1(string input, string[] expected)
     {
-      var tokenizer = new Tokenizer(input);
-      var result = tokenizer.Tokenize();
+      var result = Tokenizer.Tokenize(input);
 
       Assert.Equal(expected, result);
     }
